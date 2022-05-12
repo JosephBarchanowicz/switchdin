@@ -1,3 +1,5 @@
+# places data into table form
+
 from prettytable import PrettyTable
 
 

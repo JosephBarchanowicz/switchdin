@@ -1,3 +1,5 @@
+# functions that produce the random timers and values
+
 import random
 
 
@@ -6,7 +8,7 @@ def random_input():
 
 
 def random_timer():
-    return random.randint(1, 3)
+    return random.randint(1, 30)
 
 
 def random_values():
