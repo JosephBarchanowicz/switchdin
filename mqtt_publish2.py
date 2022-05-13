@@ -1,8 +1,8 @@
 import paho.mqtt.client as mqtt
 from averages import OneMinute, FiveMinute, ThirtyMinute
-import random_numbers
 import time
 from datetime import datetime
+import mqtt_subscribe2
 
 mqttBroker = "mqtt.eclipseprojects.io"
 client = mqtt.Client("Client2")
@@ -19,26 +19,24 @@ thirty_min = ThirtyMinute()
 # initially set values to 0
 ave_vales = [0, 0, 0]
 while True:
-    random_val = random_numbers.random_input()
-    random_timer = random_numbers.random_timer()
+    rand_val = int(mqtt_subscribe2.on_message())
 
-    # application 2 test
-    one_min.add_value(random_val)
+    one_min.add_value(rand_val)
     if one_min.check_time() <= datetime.now():
         ave_vales[0] = one_min.get_average()
         one_min.reset()
 
-    five_min.add_value(random_val)
+    five_min.add_value(rand_val)
     if five_min.check_time() <= datetime.now():
         ave_vales[1] = five_min.get_average()
         five_min.reset()
 
-    thirty_min.add_value(random_val)
+    thirty_min.add_value(rand_val)
     if thirty_min.check_time() <= datetime.now():
         ave_vales[2] = thirty_min.get_average()
         thirty_min.reset()
 
     listToStr = ' '.join(map(str, ave_vales))
-    client.publish("AVE_TEMPS", listToStr)
-    print(f"Just published {listToStr} to Topic AVE_TEMPS")
+    client.publish("AVERAGE", listToStr)
+    print(f"Just published {listToStr} to Topic AVERAGE")
     time.sleep(random_timer)

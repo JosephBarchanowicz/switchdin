@@ -3,7 +3,9 @@ import time
 
 
 def on_message(client, userdata, message):
-    print("Received message: ", str(message.payload.decode("utf-8")))
+    message = str(message.payload.decode("utf-8"))
+    print("Received message: ", message)
+    return message
 
 
 mqttBroker = "mqtt.eclipseprojects.io"
@@ -12,7 +14,7 @@ client.connect(mqttBroker)
 
 client.loop_start()
 
-client.subscribe("AVE_TEMPS")
+client.subscribe("AVERAGE")
 client.on_message = on_message
 
 time.sleep(60)
